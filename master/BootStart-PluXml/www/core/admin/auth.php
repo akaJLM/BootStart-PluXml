@@ -157,7 +157,7 @@ body {
     <div class="container"> 
           
           <!--Breadcrumb-->
-          <ul class="btn-align breadcrumb pull-left hidden-phone nav-breadcrumb">
+          <ul class="btn-align breadcrumb pull-left nav-breadcrumb">
         <li> <a href="<?php echo PLX_ROOT; ?>" style="margin-left:0"><?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?></a> <span class="divider">/</span> </li>
         <li class="active"><?php echo L_AUTH_PAGE_TITLE ?></li>
       </ul>
@@ -167,8 +167,8 @@ body {
 
 <!--Content-->
 <div class="content clearfix">
-      <div class="container">
-    <div class="row"> 
+      <div class="container-fluid">
+    <div class="row-fluid"> 
           <!--Main content-->
           <div class="span12 main">
         <?php eval($plxAdmin->plxPlugins->callHook('AdminAuthTop')) ?>
@@ -200,7 +200,7 @@ body {
   </div>
     </div>
 <footer style="color:#999;">
-      <p class="text-center">© BootStart, a <a href="http://www.littlerabbitlabs.net" target="_blank" title="Tiny Web Agency & Web Interactive Labs">littleRabbitLabs</a> html5/css3 admin theme development for <a title="PluXml" href="http://www.pluxml.org">Pluxml</a></p>
+      <p class="text-center"><a href="http://www.littlerabbitlabs.net" target="_blank" title="Tiny Web Agency &amp; Web Interactive Labs">© littleRabbitLabs</a> html5/css3 admin UI theme development</p>
     </footer>
 <?php eval($plxAdmin->plxPlugins->callHook('AdminAuthEndBody')) ?>
 </body>
