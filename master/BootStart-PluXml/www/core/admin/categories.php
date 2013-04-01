@@ -42,7 +42,7 @@ include(dirname(__FILE__).'/top.php');
       <?php eval($plxAdmin->plxPlugins->callHook('AdminCategoriesTop')) # Hook Plugins ?>
       <form class="form" action="categories.php" method="post" id="form_categories">
         <div class="control-group">
-          <div class="controls" style="margin-left:0; margin-top:15px">
+          <div class="controls" style="margin-left:0;">
             <div class="input-append">
               <?php plxUtils::printSelect('selection', array( '' => L_FOR_SELECTION, 'delete' => L_DELETE), '') ?>
               <input class="btn submit" type="submit" name="submit" value="<?php echo L_OK ?>" />
@@ -134,7 +134,7 @@ include(dirname(__FILE__).'/top.php');
           <div class="controls" style="margin-left:0;">
             <div class="input-append">
               <?php plxUtils::printSelect('selection', array( '' => L_FOR_SELECTION, 'delete' => L_DELETE), '') ?>
-              <input class="btn btn-responsive submit" type="submit" name="submit" value="<?php echo L_OK ?>" />
+              <input class="btn submit" type="submit" name="submit" value="<?php echo L_OK ?>" />
             </div>
           </div>
         </div>

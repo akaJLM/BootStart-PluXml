@@ -200,7 +200,7 @@ body {
   </div>
     </div>
 <footer style="color:#999;">
-      <p class="text-center">© BootStart, a <a href="http://www.littlerabbitlabs.net" target="_blank" title="Web development company and Web Interactive Labs">littleRabbitLabs</a> html5/css3 admin theme development for <a title="PluXml" href="http://www.pluxml.org">Pluxml</a></p>
+      <p class="text-center">© BootStart, a <a href="http://www.littlerabbitlabs.net" target="_blank" title="Tiny Web Agency & Web Interactive Labs">littleRabbitLabs</a> html5/css3 admin theme development for <a title="PluXml" href="http://www.pluxml.org">Pluxml</a></p>
     </footer>
 <?php eval($plxAdmin->plxPlugins->callHook('AdminAuthEndBody')) ?>
 </body>

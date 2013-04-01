@@ -4,12 +4,10 @@
 </div>
 <!-- .span11 main pull-right -->
 </div>
-<!-- .span12 -->
-</div>
 <!-- .row-fluid -->
 </div>
 <!-- .container -->
-</div>
+</section>
 <!-- .content -->
 
 <!--Footer-->

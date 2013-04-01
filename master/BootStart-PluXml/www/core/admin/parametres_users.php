@@ -44,7 +44,7 @@ include(dirname(__FILE__).'/top.php');
       <?php eval($plxAdmin->plxPlugins->callHook('AdminUsersTop')) # Hook Plugins ?>
       <form class="form" action="parametres_users.php" method="post" id="form_users">
         <div class="control-group">
-          <div class="controls" style="margin-left:0; margin-top:15px;">
+          <div class="controls" style="margin-left:0;;">
             <div class="input-append">
               <?php plxUtils::printSelect('selection', array( '' => L_FOR_SELECTION, 'delete' => L_DELETE), '') ?>
               <input class="btn submit" type="submit" name="submit" value="<?php echo L_OK ?>" />
@@ -55,7 +55,7 @@ include(dirname(__FILE__).'/top.php');
           <thead>
             <tr>
               <th><input type="checkbox" onclick="checkAll(this.form, 'idUser[]')" /></th>
-              <th class="hidden-phone"><?php echo L_CONFIG_USERS_ID ?></th>
+              <th class="hidden-phone hidden-tablet"><?php echo L_CONFIG_USERS_ID ?></th>
               <th class="hidden-phone"><?php echo L_PROFIL_USER ?></th>
               <th><span class="hidden-phone"><?php echo L_PROFIL_LOGIN ?></span></th>
               <th><span class="hidden-phone"><?php echo L_PROFIL_PASSWORD ?></span></th>
@@ -73,7 +73,7 @@ include(dirname(__FILE__).'/top.php');
 			if (!$_user['delete']) {
 				echo '<tr class="line-'.($num%2).'">';
 				echo '<td><input class="span12" type="checkbox" name="idUser[]" value="'.$_userid.'" /><input type="hidden" name="userNum[]" value="'.$_userid.'" /></td>';
-				echo '<td class="hidden-phone">Utilisateur '.$_userid.'</td><td class="hidden-phone">';
+				echo '<td class="hidden-phone hidden-tablet">Utilisateur '.$_userid.'</td><td class="hidden-phone">';
 				plxUtils::printInput($_userid.'_name', plxUtils::strCheck($_user['name']), 'text', '20-255', false, 'span12');
 				echo '</td><td>';
 				plxUtils::printInput($_userid.'_login', plxUtils::strCheck($_user['login']), 'text', '11-255', false, 'span12');
@@ -104,7 +104,7 @@ include(dirname(__FILE__).'/top.php');
 	?>
             <tr class="info">
               <td>&nbsp;</td>
-              <td class="hidden-phone"><?php echo L_CONFIG_USERS_NEW; ?></td>
+              <td class="hidden-phone hidden-tablet"><?php echo L_CONFIG_USERS_NEW; ?></td>
               <td class="hidden-phone"><?php
 				echo '<input type="hidden" name="userNum[]" value="'.$new_userid.'" />';
 				plxUtils::printInput($new_userid.'_newuser', 'true', 'hidden');
@@ -127,7 +127,7 @@ include(dirname(__FILE__).'/top.php');
         <?php echo plxToken::getTokenPostMethod() ?>
         <div class="control-group pull-right">
           <div class="controls" style="margin-left:0;">
-            <input class="btn update" type="submit" name="update" value="<?php echo L_CONFIG_USERS_UPDATE ?>" />
+            <input class="btn btn-responsive update" type="submit" name="update" value="<?php echo L_CONFIG_USERS_UPDATE ?>" />
           </div>
         </div>
         <div class="control-group">

@@ -150,7 +150,7 @@ if($arts) { # Si on a des articles (hors page)
       <div class="btn-group"> <a class="btn btn-responsive" <?php echo ($_SESSION['sel_get']=='draft')?'class="selected" ':'' ?>href="index.php?sel=draft&amp;page=1"><?php echo L_ALL_DRAFTS ?> <span class="label label-info"><?php echo $plxAdmin->nbArticles('draft', $userId) ?></span> </a> <a class="btn btn-responsive" <?php echo ($_SESSION['sel_get']=='mod')?'class="selected" ':'' ?>href="index.php?sel=mod&amp;page=1"><?php echo L_ALL_AWAITING_MODERATION ?> <span class="label label-info"><?php echo $plxAdmin->nbArticles('all', $userId, '_') ?></span> </a> </div>
       <?php
 if($_SESSION['profil']<=PROFIL_MODERATOR) {
-	echo '<div class="control-group" style="margin:15px auto -15px"><div class="controls"><div class="input-append">';
+	echo '<div class="control-group" style="margin:15px 0 0"><div class="controls"><div class="input-append">';
 	plxUtils::printSelect('selection[]', array( '' => L_FOR_SELECTION, 'delete' => L_DELETE), '', false, '', false);
 	echo '<input class="btn submit" type="submit" name="submit" value="'.L_OK.'" />';
 	echo '</div></div></div>';

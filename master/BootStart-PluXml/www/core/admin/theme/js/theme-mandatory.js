@@ -50,31 +50,31 @@ jQuery(document).ready(function ($) {
 		$('#toggle_tag_add').css('display', 'block');
 		$('#toggler_tag_add').html('-');
 	}
+	
+	// func - insert tag
+	function insertTag(where, tag) {
+		var formfield = document.getElementsByName(where)['0'];
+		if(formfield.value=='')
+			formfield.value=tag;
+		else
+			formfield.value = formfield.value+', '+tag;
+	}
+	
+	// func - remove tag
+	function removeTag(where, tag) {
+		var formfield = document.getElementsByName(where)['0'];
+		if(formfield.value=='')
+			formfield.value=formfield.value;
+		else
+			var regex = new RegExp(", ?"+tag+"|^"+tag+", |^"+tag+"$");
+			formfield.value = formfield.value.replace(regex, "");
+	}
 		
 	/* if exist - disabled statement for each tag on page load */
 	if($('#id_tags').length > 0)
 	{
 		var tags = $('#id_tags').val();
 		var tagsArray = tags.split(',');
-		
-		// func - insert tag
-		function insertTag(where, tag) {
-			var formfield = document.getElementsByName(where)['0'];
-			if(formfield.value=='')
-				formfield.value=tag;
-			else
-				formfield.value = formfield.value+', '+tag;
-		}
-		
-		// func - remove tag
-		function removeTag(where, tag) {
-			var formfield = document.getElementsByName(where)['0'];
-			if(formfield.value=='')
-				formfield.value=formfield.value;
-			else
-				var regex = new RegExp(", ?"+tag+"|^"+tag+", |^"+tag+"$");
-				formfield.value = formfield.value.replace(regex, "");
-		}
 		
 		// foreach tag button
 		$('#toggle_tag_chose > a').each(function()
@@ -106,11 +106,11 @@ jQuery(document).ready(function ($) {
 				if($(this).hasClass('disabled'))
 				{
 					$(this).removeClass('disabled');
-					removeTag('tags', '' + tag + '');
+					removeTag('tags', tag);
 				}
 				else{
 					$(this).addClass('disabled');
-					insertTag('tags', '' + tag + '');
+					insertTag('tags', tag);
 				}
 			});
 		});
@@ -161,6 +161,8 @@ jQuery(document).ready(function ($) {
 		
 		var width = $(window).width();
 		
+		$("#issue").removeAttr('style');
+		
 		if (width < 980)
 		{
 			/* Buttons responsive */
@@ -187,6 +189,7 @@ jQuery(document).ready(function ($) {
 					$(this).removeAttr('data-placement data-toggle rel data-original-title');
 					
 				});
+				$("#issue").css('padding', '0 20px 0 20px');
 			}
 		} 
 		else
