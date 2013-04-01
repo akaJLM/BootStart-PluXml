@@ -1,4 +1,4 @@
 BootStart-PluXml
 ================
 
-**BootStart-PluXml is an ultra light & cute UI admin theme development for PluXml based on Bootstrap**
+**BootStart-PluXml is a minimalist & ultra light UI admin theme development based on Bootstrap for the cms PluXml**
