@@ -210,8 +210,7 @@ body {
             <div class="span11 main pull-right" id="content">
              
 			<?php
-			if(is_file(PLX_ROOT.'install.php')) ;
-					$msg = new plxMsg;
-					$msg->Error(L_WARNING_INSTALLATION_FILE);
-					$msg->Display();
+			if(is_file(PLX_ROOT.'install.php'))
+					plxMsg::Error(L_WARNING_INSTALLATION_FILE);
+					plxMsg::Display();
 			?>
