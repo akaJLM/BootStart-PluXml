@@ -63,7 +63,7 @@ body {
     
     <div id="issue">
       
-      <a class="brand" href="/" style="margin-left:0;padding-left:0;"><?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?></a></li>
+      <a class="brand" href="./" style="margin-left:0;padding-left:0;"><?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?></a></li>
       
       <div class="pull-right">
         
@@ -204,11 +204,14 @@ body {
               <hr class="visible-desktop">
               <a class="visible-desktop" title="PluXml" href="http://www.pluxml.org">Pluxml <?php echo $plxAdmin->aConf['version'] ?></a> </div>
             <!-- sidebar -->
-            <?php
-                if(is_file(PLX_ROOT.'install.php')) echo L_WARNING_INSTALLATION_FILE;
-                        plxMsg::Display();
-                ?>
             
 			<?php eval($plxAdmin->plxPlugins->callHook('AdminTopBottom')) ?>
             
             <div class="span11 main pull-right" id="content">
+             
+			<?php
+			if(is_file(PLX_ROOT.'install.php')) ;
+					$msg = new plxMsg;
+					$msg->Error(L_WARNING_INSTALLATION_FILE);
+					$msg->Display();
+			?>

@@ -140,7 +140,7 @@ body {
       <div class="navbar-inner">
     <div class="container">
           <ul class="nav">
-        <li><a class="brand" href="/" style="margin-left:0"><?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?></a></li>
+        <li><a class="brand" href="./" style="margin-left:0"><?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?></a></li>
       </ul>
           <div class="pull-right">
         <div class="btn-toolbar">
