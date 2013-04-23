@@ -52,10 +52,10 @@ body {
 <?php eval($plxAdmin->plxPlugins->callHook('AdminTopEndHead')) ?>
 </head>
 
-<body>
+<body role="document" aria-labelledby="documentName"><span id="documentName" style="display:none"><?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?></span>
 
 <!--Menu top-->
-<div id="navbar-user" class="navbar navbar-fixed-top">
+<nav id="navbar-user" class="navbar navbar-fixed-top">
   
   <div class="navbar-inner" style="padding:0">
     
@@ -63,7 +63,7 @@ body {
     
     <div id="issue">
       
-      <a class="brand" href="./" style="margin-left:0;padding-left:0;"><?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?></a></li>
+      <a class="brand" href="<?php echo PLX_ROOT ?>" style="margin-left:0;padding-left:0;"><?php echo plxUtils::strCheck($plxAdmin->aConf['title']) ?></a></li>
       
       <div class="pull-right">
         
@@ -88,122 +88,54 @@ body {
 
 </div><!--navbar-inner-->
 
-</div><!--navbar-user-->
+</nav><!--navbar-user-->
 
 <!--Header-->
-<header class="subhead clearfix">
+<header role="banner" class="subhead clearfix">
     
     <div class="container-fluid more-padding">
     
-    	<div style="padding:0 20px;">
+    <div role="toolbar" aria-label="static-links" class="subfix">
       
       <!--Breadcrumb-->
-      <ul class="btn-align breadcrumb pull-left hidden-phone nav-breadcrumb" id="adminBreadcrumb">
-        <li> <a href="<?php echo PLX_CORE ?>admin/index.php"><?php echo L_ADMIN_DASHBOARD_TEXT ?></a> <span class="divider">/</span></li>
-        <li class="active"></li>
-      </ul>
+      <aside id="breadcrumb" class="hidden-phone">
+          <ul role="tree" class="btn-align breadcrumb pull-left hidden-phone nav-breadcrumb" id="adminBreadcrumb">
+            <li> <a role="link" href="<?php echo PLX_CORE ?>admin/index.php"><?php echo L_ADMIN_DASHBOARD_TEXT ?></a> <span class="divider">/</span></li>
+            <li class="active"></li>
+          </ul>
+      </aside>
       
       <!-- Button Toolbar right-->
-      <div class="btn-toolbar pull-right">
+       <aside role="menubar" class="btn-toolbar pull-right">
         
-        <div class="btn-group"> 
-        	<a href="<?php echo PLX_CORE ?>admin/article.php" class="btn" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?php echo L_BUTTON_ADD_POST ?>"> <i class="icon-edit"></i> </a> <a href="<?php echo PLX_CORE ?>admin/statiques.php" class="btn" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?php echo L_BUTTON_ADD_PAGE ?>"> <i class="icon-list-alt"></i> </a>
+        <div role="menu" class="btn-group"> 
+        	<a role="link" href="<?php echo PLX_CORE ?>admin/article.php" class="btn" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?php echo L_BUTTON_ADD_POST ?>"> <i class="icon-edit"></i> </a> <a role="link" href="<?php echo PLX_CORE ?>admin/statiques.php" class="btn" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?php echo L_BUTTON_ADD_PAGE ?>"> <i class="icon-list-alt"></i> </a>
         </div>
         
-        <div class="btn-group">
-        	<a href="<?php echo PLX_CORE ?>admin/medias.php" class="btn" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?php echo L_BUTTON_MANAGE_FILES ?>"> <i class="icon-cloud-upload"></i> </a> <a href="<?php echo PLX_CORE ?>admin/parametres_users.php" class="btn" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?php echo L_BUTTON_MANAGE_USERS ?>"> <i class="icon-group"></i> </a> <a href="<?php echo PLX_CORE ?>admin/comments.php" class="btn" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?php echo L_BUTTON_MANAGE_COMMENTS ?>"> <i class="icon-comments"></i>
+        <div role="menu" class="btn-group">
+        	<a role="link" href="<?php echo PLX_CORE ?>admin/medias.php" class="btn" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?php echo L_BUTTON_MANAGE_FILES ?>"> <i class="icon-cloud-upload"></i> </a> <a role="link" href="<?php echo PLX_CORE ?>admin/parametres_users.php" class="btn" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?php echo L_BUTTON_MANAGE_USERS ?>"> <i class="icon-group"></i> </a> <a role="link" href="<?php echo PLX_CORE ?>admin/comments.php" class="btn" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?php echo L_BUTTON_MANAGE_COMMENTS ?>"> <i class="icon-comments"></i>
           <?php $comments = $plxAdmin->nbComments('offline'); echo ($comments > 0) ? '<span class="label label-info">' . $comments . '</span>' : ''; ?>
-          </a> <a href="<?php echo PLX_CORE ?>admin/index.php" class="btn" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?php echo L_BUTTON_MANAGE_POSTS ?>"> <i class="icon-copy"></i>
+          </a> <a role="link" href="<?php echo PLX_CORE ?>admin/index.php" class="btn" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="<?php echo L_BUTTON_MANAGE_POSTS ?>"> <i class="icon-copy"></i>
           <?php $userId = ($_SESSION['profil'] < PROFIL_WRITER ? '[0-9]{3}' : $_SESSION['user']); $posts = $plxAdmin->nbArticles('all', $userId, '_'); echo ($posts > 0) ? '<span class="label label-info">' . $posts . '</span>' : ''; ?>
           </a>
        </div>
        
- 	 </div><!--btn-toolbar pull-right-->
+ 	 </aside><!--.btn-toolbar pull-right-->
      
-     </div><!--content-->
+     </div><!--.subfix-->
   
-  </div><!--container-fluid-->
+  </div><!--.container-fluid-->
   
 </header>
 
 <!--Content-->
-<section class="content">
+<section role="main" class="content">
+
 	<div class="container-fluid more-padding">
+    
 		<div class="row-fluid">
-        	<!-- Sidebar main menu left-->
-            <div class="span1 well well-small sidebar-mini" id="sidebar"> <a class="hidden-phone" style="display:block;margin-top:15px" href="<?php echo PLX_CORE ?>admin/profil.php" rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="<?php
-                    echo ' ' . plxUtils::strCheck($plxAdmin->aUsers[$_SESSION['user']]['name']) . ': ';
-                        if($_SESSION['profil']==PROFIL_ADMIN) echo L_PROFIL_ADMIN;
-                    elseif($_SESSION['profil']==PROFIL_MANAGER) echo L_PROFIL_MANAGER;
-                    elseif($_SESSION['profil']==PROFIL_MODERATOR) echo L_PROFIL_MODERATOR;
-                    elseif($_SESSION['profil']==PROFIL_EDITOR) echo L_PROFIL_EDITOR;
-                    else echo L_PROFIL_WRITER;
-                    ?>"> <i class="icon-user icon-blue icon-shadowed-white"></i> </a>
-              <hr class="hidden-phone">
-              <ul class="nav nav-tabs nav-stacked">
-                <?php
-                        $menus = array();
-                        $userId = ($_SESSION['profil'] < PROFIL_WRITER ? '[0-9]{3}' : $_SESSION['user']);
-                        $nbartsmod = $plxAdmin->nbArticles('all', $userId, '_');
-                        $arts_mod = $nbartsmod>0 ? '<span class="label label-info hidden-phone" style="position: absolute;margin: -10px auto auto 10px;">' . $nbartsmod . '</span>':'';
-                        $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_ARTICLES, 'index.php?page=1', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_ARTICLES_TITLE.'"', 'copy', false, false,$arts_mod);
-            
-                        if(isset($_GET['a'])) # edition article
-                    $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_NEW_ARTICLES_TITLE, 'article.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_NEW_ARTICLES.'"', 'edit', false, false, '');
-                        else # nouvel article
-                    $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_NEW_ARTICLES_TITLE, 'article.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_NEW_ARTICLES.'"', 'edit', false, false, '');
-            
-                        $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_MEDIAS, 'medias.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_MEDIAS_TITLE.'"', 'cloud-upload', false, false, '');
-            
-                        if($_SESSION['profil'] <= PROFIL_MANAGER) {
-                    $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_STATICS, 'statiques.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_STATICS_TITLE.'"', 'list-alt', false, false, '');
-                        }
-                        if($_SESSION['profil'] <= PROFIL_MODERATOR) {
-                    $nbcoms = $plxAdmin->nbComments('offline');
-                    $coms_offline = $nbcoms>0 ? '<span class="label label-info hidden-phone" style="position: absolute;margin: -10px auto auto 10px;">' . $plxAdmin->nbComments('offline') . '</span>':'';
-                    $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_COMMENTS, 'comments.php?page=1', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_COMMENTS_TITLE.'"', 'comments', false, false, $coms_offline);
-                        }
-                        if($_SESSION['profil'] <= PROFIL_EDITOR) {
-                    $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_CATEGORIES, 'categories.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_CATEGORIES_TITLE.'"', 'magnet', false, false, '');
-                        }
-                        if($_SESSION['profil'] == PROFIL_ADMIN) {
-                    $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_CONFIG, 'parametres_base.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_CONFIG_TITLE.'"', 'cogs', false, false, '');
-                            if (preg_match('/parametres/',basename($_SERVER['SCRIPT_NAME']))) {
-                                $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_CONFIG_BASE, 'parametres_base.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_CONFIG_BASE_TITLE.'"', 'cog', 'sub', false, '');
-                                $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_CONFIG_VIEW, 'parametres_affichage.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_CONFIG_VIEW_TITLE.'"', 'desktop', 'sub', false, '');
-                                $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_CONFIG_USERS, 'parametres_users.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_CONFIG_USERS_TITLE.'"', 'group', 'sub', false, '');
-                                $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_CONFIG_ADVANCED, 'parametres_avances.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_CONFIG_ADVANCED_TITLE.'"', 'cogs', 'sub', false, '');
-                                $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_CONFIG_PLUGINS, 'parametres_plugins.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_CONFIG_PLUGINS_TITLE.'"', 'wrench', 'sub', false, '');
-                                $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_CONFIG_INFOS, 'parametres_infos.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_CONFIG_INFOS_TITLE.'"', 'book', 'sub', false, '');
-                            }
-                        }
-                        $menus[] = plxUtilsExt::formatMenuBootstrap(L_MENU_PROFIL, 'profil.php', false, 'rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="'.L_MENU_PROFIL_TITLE.'"', 'user', false, false, '');
-                        # récuperation des menus pour les plugins
-                        foreach($plxAdmin->plxPlugins->aPlugins as $plugName => $plugin) {
-                            if(isset($plugin['activate']) AND $plugin['activate'] AND !empty($plugin['title'])) {
-                                if(isset($plugin['instance']) AND is_file(PLX_PLUGINS.$plugName.'/admin.php')) {
-                                    if($plxAdmin->checkProfil($plugin['instance']->getAdminProfil(),false)) {
-                                        if($plugin['instance']->adminMenu) {
-                                            $menu = plxUtilsExt::formatMenuBootstrap(plxUtils::strCheck($plugin['instance']->adminMenu['title']), 'plugin.php?p='.$plugName, plxUtils::strCheck($plugin['instance']->adminMenu['caption']));
-                                            if($plugin['instance']->adminMenu['position'])
-                                                array_splice($menus, ($plugin['instance']->adminMenu['position']-1), 0, $menu);
-                                            else
-                                                $menus[]=$menu;
-                                        }
-                                        else
-                                            $menus[] = plxUtilsExt::formatMenuBootstrap(plxUtils::strCheck($plugin['title']), 'plugin.php?p='.$plugName, plxUtils::strCheck($plugin['title']));
-                                    }
-                                }
-                            }
-                        }
-                        # Hook Plugins
-                        eval($plxAdmin->plxPlugins->callHook('AdminTopMenus'));
-                        echo implode('', $menus);
-                ?>
-              </ul>
-              <hr class="visible-desktop">
-              <a class="visible-desktop" title="PluXml" href="http://www.pluxml.org">Pluxml <?php echo $plxAdmin->aConf['version'] ?></a> </div>
-            <!-- sidebar -->
+        
+        	<?php include(PLX_CORE . 'admin/side.php'); ?>
             
 			<?php eval($plxAdmin->plxPlugins->callHook('AdminTopBottom')) ?>
             

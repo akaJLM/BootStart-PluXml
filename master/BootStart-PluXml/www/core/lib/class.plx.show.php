@@ -330,7 +330,7 @@ class plxShow {
 	 * @scope	global
 	 * @author	Anthony GUÉRIN, Florent MONTHEL, Stephane F
 	 **/
-	public function catList($extra='', $format='<li id="#cat_id" class="#cat_status"><a href="#cat_url" title="#cat_name">#cat_name</a></li>', $include='', $exclude='') {
+	public function catList($extra='', $format='<li id="#cat_id" class="#cat_status"><a href="#cat_url" title="#cat_name">#cat_name</a></li>', $include='', $exclude='', $icons='') {
 		# Hook Plugins
 		if(eval($this->plxMotor->plxPlugins->callHook('plxShowLastCatList'))) return;
 
@@ -343,18 +343,25 @@ class plxShow {
 			$name = str_replace('#art_nb','',$name);
 			echo $name;
 		}
+		# Si on a la variable icons en paramètres, on trient déjà les icônes
+		if($icons != '') {
+			$icons = explode('|', $icons);	
+		}
 		# On verifie qu'il y a des categories
 		if($this->plxMotor->aCats) {
 			foreach($this->plxMotor->aCats as $k=>$v) {
+				
 				$in = (empty($include) OR preg_match('/('.$include.')/', $k));
 				$ex = (!empty($exclude) AND preg_match('/('.$exclude.')/', $k));
-				if($in AND !$ex) {
+				if($in AND !$ex) { $i++;
 					if(($v['articles']>0 OR $this->plxMotor->aConf['display_empty_cat']) AND ($v['menu']=='oui') AND $v['active']) { # On a des articles
 						# On modifie nos motifs
 						$name = str_replace('#cat_id','cat-'.intval($k),$format);
 						$name = str_replace('#cat_url',$this->plxMotor->urlRewrite('?categorie'.intval($k).'/'.$v['url']),$name);
 						$name = str_replace('#cat_name',plxUtils::strCheck($v['name']),$name);
-						$name = str_replace('#cat_status',($this->catId()==intval($k)?'active':'noactive'), $name);
+						$name = str_replace('#cat_status',($this->catId()==intval($k)?'active':'inactive'), $name);
+						$name = str_replace('#icon_color',($this->catId()==intval($k)?'icon-white':'icon-blue'), $name);
+						$name = str_replace('#icon_type', 'icon-' . $icons[$i-1], $name);
 						$name = str_replace('#art_nb',$v['articles'],$name);
 						echo $name;
 					}
@@ -494,14 +501,15 @@ class plxShow {
 	 * @scope	home,categorie,article,tags,archives
 	 * @author	Anthony GUÉRIN, Florent MONTHEL, Stephane F
 	 **/
-	public function artTitle($type='') {
+	public function artTitle($type='', $class='') {
 
 		if($type == 'link') { # Type lien
 			$id = intval($this->plxMotor->plxRecord_arts->f('numero'));
 			$title = plxUtils::strCheck($this->plxMotor->plxRecord_arts->f('title'));
 			$url = $this->plxMotor->plxRecord_arts->f('url');
+			$class = $class ? ' class="'.$class.'"' : '';
 			# On effectue l'affichage
-			echo '<a href="'.$this->plxMotor->urlRewrite('?article'.$id.'/'.$url).'" title="'.$title.'">'.$title.'</a>';
+			echo '<a role="link" href="'.$this->plxMotor->urlRewrite('?article'.$id.'/'.$url).'" title="'.$title.'"'.$class.'>'.$title.'</a>';
 		} else { # Type normal
 			echo plxUtils::strCheck($this->plxMotor->plxRecord_arts->f('title'));
 		}
@@ -604,7 +612,7 @@ class plxShow {
 	 * @scope	home,categorie,article,tags,archives
 	 * @author	Anthony GUÉRIN, Florent MONTHEL, Stephane F
 	 **/
-	public function artCat($separator=',') {
+	public function artCat($separator=',', $nameonly=false, $urlonly=false) {
 
 		# Initialisation de notre variable interne
 		$catIds = explode(',', $this->plxMotor->plxRecord_arts->f('categorie'));
@@ -617,16 +625,33 @@ class plxShow {
 					$name = plxUtils::strCheck($this->plxMotor->aCats[ $catId ]['name']);
 					$url = $this->plxMotor->aCats[ $catId ]['url'];
 					if(isset($this->plxMotor->aCats[ $this->plxMotor->cible ]['url']))
-						$active = $this->plxMotor->aCats[ $this->plxMotor->cible ]['url']==$url?"active":"noactive";
+						$active = $this->plxMotor->aCats[ $this->plxMotor->cible ]['url']==$url?"active":"inactive";
 					else
-						$active = "noactive";
+						$active = "inactive";
 					# On effectue l'affichage
-					echo '<a class="'.$active.'" href="'.$this->plxMotor->urlRewrite('?categorie'.intval($catId).'/'.$url).'" title="'.$name.'">'.$name.'</a>';
+					if($nameonly == true){
+						echo $name;
+					}
+					elseif($urlonly == true){
+						echo $this->plxMotor->urlRewrite('?categorie'.intval($catId).'/'.$url);
+					}
+					else{
+						echo '<a class="cat '.$active.'" href="'.$this->plxMotor->urlRewrite('?categorie'.intval($catId).'/'.$url).'" title="'.$name.'">'.$name.'</a>';
+					}
 				} else { # La categorie n'existe pas
 					echo L_UNCLASSIFIED;
 				}
 			} else { # Categorie "home"
-				echo '<a class="active" href="'.$this->plxMotor->urlRewrite().'" title="'.L_HOMEPAGE.'">'.L_HOMEPAGE.'</a>';
+				# On effectue l'affichage
+					if($nameonly == true){
+						echo L_HOMEPAGE;
+					}
+					elseif($urlonly == true){
+						echo $this->plxMotor->urlRewrite();
+					}
+					else{
+						echo '<a class="active" href="'.$this->plxMotor->urlRewrite().'" title="'.L_HOMEPAGE.'">'.L_HOMEPAGE.'</a>';
+					}
 			}
 			if ($idx!=sizeof($catIds)-1) echo $separator.' ';
 		}
@@ -641,7 +666,7 @@ class plxShow {
 	 * @scope	home,categorie,article,tags,archives
 	 * @author	Stephane F
 	 **/
-	public function artTags($format='<a class="#tag_status" href="#tag_url" title="#tag_name">#tag_name</a>', $separator=',') {
+	public function artTags($format='<a class="tag #tag_status" href="#tag_url" title="#tag_name">#tag_name</a>', $separator=',') {
 		# Hook Plugins
 		if(eval($this->plxMotor->plxPlugins->callHook('plxShowArtTags'))) return;
 
@@ -681,15 +706,17 @@ class plxShow {
 			$title = plxUtils::strCheck($this->plxMotor->plxRecord_arts->f('title'));
 			$url = $this->plxMotor->plxRecord_arts->f('url');
 			# On effectue l'affichage
-			echo $this->plxMotor->plxRecord_arts->f('chapo')."\n";
+			if($format == 'resume'){
+				echo $this->plxMotor->plxRecord_arts->f('chapo')."\n";
+				unset($format);
+			}
 			if($format) {
 				$title = str_replace("#art_title", $title, $format);
 				echo '<p class="more"><a href="'.$this->plxMotor->urlRewrite('?article'.$id.'/'.$url).'" title="'.$title.'">'.$title.'</a></p>'."\n";
 			}
-		} else { # Pas de chapo, affichage du contenu
-			if($content === true) {
-				echo $this->plxMotor->plxRecord_arts->f('content')."\n";
-			}
+		}
+		if($content === true) {
+			echo $this->plxMotor->plxRecord_arts->f('content')."\n";
 		}
 	}
 
@@ -724,9 +751,9 @@ class plxShow {
 		if(eval($this->plxMotor->plxPlugins->callHook('plxShowArtFeed'))) return;
 
 		if($categorie != '' AND is_numeric($categorie)) # Fil Rss des articles d'une catégorie
-			echo '<a href="'.$this->plxMotor->urlRewrite('feed.php?rss/categorie'.$categorie).'" title="'.L_ARTFEED_RSS_CATEGORY.'">'.L_ARTFEED_RSS_CATEGORY.'</a>';
+			echo '<a class="btn btn-mini" href="'.$this->plxMotor->urlRewrite('feed.php?rss/categorie'.$categorie).'" title="'.L_ARTFEED_RSS_CATEGORY.'"><i class="icon-rss icon-white"></i> '.L_ARTFEED_RSS_CATEGORY.'</a>';
 		else # Fil Rss des articles
-			echo '<a href="'.$this->plxMotor->urlRewrite('feed.php?rss').'" title="'.L_ARTFEED_RSS.'">'.L_ARTFEED_RSS.'</a>';
+			echo '<a class="btn btn-mini" href="'.$this->plxMotor->urlRewrite('feed.php?rss').'" title="'.L_ARTFEED_RSS.'"><i class="icon-rss icon-white"></i> '.L_ARTFEED_RSS.'</a>';
 	}
 
 	/**
@@ -761,7 +788,7 @@ class plxShow {
 		if($this->plxMotor->mode == 'article')
 			echo $txt;
 		else
-			echo '<a href="'.$this->plxMotor->urlRewrite('?article'.$num.'/'.$url).'#comments" title="'.$txt.'">'.$txt.'</a>';
+			echo '<span class="number-of-comments label label-info" style="position:absolute;">'.$nb.'</span><a href="'.$this->plxMotor->urlRewrite('?article'.$num.'/'.$url).'#goto-comments" title="'.$txt.'"><i class="icon-3x icon-comments-alt icon-blue"></i></a>';
 
 	}
 
@@ -1016,14 +1043,21 @@ class plxShow {
 	 * @scope	global
 	 * @author	Anthony GUÉRIN, Florent MONTHEL, Stephane F
 	 **/
-	public function comFeed($type='rss', $article='') {
+	public function comFeed($type='link', $article='') {
 		# Hook Plugins
 		if(eval($this->plxMotor->plxPlugins->callHook('plxShowComFeed'))) return;
 
-		if($article != '' AND is_numeric($article)) # Fil Rss des commentaires d'un article
-			echo '<a href="'.$this->plxMotor->urlRewrite('feed.php?rss/commentaires/article'.$article).'" title="'.L_COMFEED_RSS_ARTICLE.'">'.L_COMFEED_RSS_ARTICLE.'</a>';
-		else # Fil Rss des commentaires global
+		if($article != '' AND is_numeric($article)){ # Fil Rss des commentaires d'un article
+			if($type == 'link'){
+				return $this->plxMotor->urlRewrite('feed.php?rss/commentaires/article'.$article);
+			}
+			else{
+				echo '<a href="'.$this->plxMotor->urlRewrite('feed.php?rss/commentaires/article'.$article).'" title="'.L_COMFEED_RSS_ARTICLE.'">'.L_COMFEED_RSS_ARTICLE.'</a>';
+			}
+		}
+		else {# Fil Rss des commentaires global
 			echo '<a href="'.$this->plxMotor->urlRewrite('feed.php?rss/commentaires').'" title="'.L_COMFEED_RSS.'">'.L_COMFEED_RSS.'</a>';
+		}
 	}
 
 	/**
@@ -1316,6 +1350,110 @@ class plxShow {
 				echo '&nbsp;<span class="p_next"><a href="'.$n_url.'" title="'.L_PAGINATION_NEXT_TITLE.'">'.L_PAGINATION_NEXT.'</a></span>';
 			if(($this->plxMotor->page + 1) < $last_page) # Si la page active++ < derniere page on affiche un lien derniere page
 				echo '&nbsp;<span class="p_last"><a href="'.$l_url.'" title="'.L_PAGINATION_LAST_TITLE.'">'.L_PAGINATION_LAST.'</a></span>';
+		}
+	}
+	
+	/**
+	 * Méthode qui affiche la pagination Bootstrap
+	 * @param	type 		Détermine le format de la navigation : normal ou mini
+	 * @param	position 	Détermine la position du label label-info : top, right, bottom, left ou none(pas de label)
+	 * @return	stdout
+	 * @scope	global
+	 * @author	Florent MONTHEL, Stephane F, Jonathan Maris
+	 **/
+	public function paginationBootstrap($type = 'normal', $position = 'bottom') {
+
+		$plxGlob_arts = clone $this->plxMotor->plxGlob_arts;
+		$aFiles = $plxGlob_arts->query($this->plxMotor->motif,'','',0,false,'before');
+
+		if($aFiles AND $this->plxMotor->bypage AND sizeof($aFiles)>$this->plxMotor->bypage) {
+
+			// on supprime le n° de page courante dans l'url
+			$arg_url = $this->plxMotor->get;
+			if(preg_match('/(\/?page[0-9]+)$/',$arg_url,$capture)) {
+				$arg_url = str_replace($capture[1], '', $arg_url);
+			}
+			// Calcul des pages
+			$prev_page = $this->plxMotor->page - 1;
+			$next_page = $this->plxMotor->page + 1;
+			$last_page = ceil(sizeof($aFiles)/$this->plxMotor->bypage);
+			// Generation des URLs
+			$f_url = $this->plxMotor->urlRewrite('?'.$arg_url); # Premiere page
+			$arg = (!empty($arg_url) AND $prev_page>1) ? $arg_url.'/' : $arg_url;
+			$p_url = $this->plxMotor->urlRewrite('?'.$arg.($prev_page<=1?'':'page'.$prev_page)); # Page precedente
+			$arg = !empty($arg_url) ? $arg_url.'/' : $arg_url;
+			$n_url = $this->plxMotor->urlRewrite('?'.$arg.'page'.$next_page); # Page suivante
+			$l_url = $this->plxMotor->urlRewrite('?'.$arg.'page'.$last_page); # Derniere page
+
+			switch($position):
+				case 'top':
+					$pre = '';
+					$end = '<br>';
+					$style = 'margin-bottom: 5px;';
+				break;	
+				case 'right':
+					$pre = '';
+					$end = '';
+					$style = 'margin-left: 5px;';
+				break;	
+				case 'bottom':
+					$pre = '<br>';
+					$end = '';
+					$style = '';
+				break;	
+				case 'left':
+					$pre = '';
+					$end = '';
+					$style = 'margin-right: 5px;';
+				break;
+				default:
+					$pre = '';
+					$end = '<br>';
+					$style = 'margin-bottom: 5px;';
+				break;
+			endswitch;
+			
+				$previous = '&lsaquo;';
+				$next = '&rsaquo;';
+			
+			if($type == 'normal')
+			{
+				$previous = L_PAGINATION_PREVIOUS;
+				$next = L_PAGINATION_NEXT;
+			}
+			
+			// Affichage de la page courante
+			$label = sprintf(''.$pre.'<span class="label label-info" style="vertical-align:top; line-height: 18px; '.$style.'">'.L_PAGINATION.'</span>'.$end.'',$this->plxMotor->page,$last_page);
+			
+			if($position == 'none')
+				$label = '';
+				
+				
+			if($position == 'top' || $position == 'left')
+				echo $label;
+			
+			// On effectue l'affichage
+			echo '<ul role="navigation">';
+			if($this->plxMotor->page > 2) // Si la page active > 2 on affiche un lien 1ere page
+				echo '<li><a href="'.$f_url.'" title="'.L_PAGINATION_FIRST_TITLE.'">'.L_PAGINATION_FIRST.'</a></li>';
+			else
+				echo '<li class="disabled"><a onclick="javascript:return false;" href="#" title="'.L_PAGINATION_FIRST_TITLE.'">'.L_PAGINATION_FIRST.'</a></li>';
+			if($this->plxMotor->page > 1) // Si la page active > 1 on affiche un lien page precedente
+				echo '<li><a href="'.$p_url.'" title="'.L_PAGINATION_PREVIOUS_TITLE.'">'.$previous.'</a></li>';
+			else
+				echo '<li class="disabled"><a onclick="javascript:return false;" href="#" title="'.L_PAGINATION_PREVIOUS_TITLE.'">'.$previous.'</a></li>';
+			if($this->plxMotor->page < $last_page) // Si la page active < derniere page on affiche un lien page suivante
+				echo '<li><a href="'.$n_url.'" title="'.L_PAGINATION_NEXT_TITLE.'">'.$next.'</a></li>';
+			else
+				echo '<li class="disabled"><a onclick="javascript:return false;" href="#" title="'.L_PAGINATION_NEXT_TITLE.'">'.$next.'</a></li>';
+			if(($this->plxMotor->page + 1) < $last_page) // Si la page active++ < derniere page on affiche un lien derniere page
+				echo '<li><a href="'.$l_url.'" title="'.L_PAGINATION_LAST_TITLE.'">'.L_PAGINATION_LAST.'</a></li>';
+			else
+				echo '<li class="disabled"><a onclick="javascript:return false;" href="#" title="'.L_PAGINATION_LAST_TITLE.'">'.L_PAGINATION_LAST.'</a></li>';
+			echo '</ul>';
+			
+			if($position == 'right' || $position == 'bottom')
+				echo $label;
 		}
 	}
 

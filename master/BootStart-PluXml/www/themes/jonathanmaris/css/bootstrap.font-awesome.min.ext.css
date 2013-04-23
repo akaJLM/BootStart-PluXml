@@ -44,6 +44,6 @@
 }
 
 /* Bootstrap extends icon-* with icon-shadowed-white */
-.icon-shadowed-white {
+.icon-shadowed-white{
 	text-shadow: 1px 1px 1px #fff;
 }
