@@ -17,7 +17,7 @@
             
                 <div class="clearfix">
                     <div class="pull-right">
-                        <span class="date label label-info"><?php $plxShow->artDate('#num_day #month #num_year(4)'); ?></span>
+                        <span class="date label label-info"><time><?php $plxShow->artDate('#num_day #month #num_year(4)'); ?></time></span>
                     </div>
                     <h2 class="pull-left"><?php $plxShow->artTitle('link'); ?></h2>
                 </div>

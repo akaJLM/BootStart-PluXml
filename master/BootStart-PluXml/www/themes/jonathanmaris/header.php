@@ -4,11 +4,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="msvalidate.01" content="783659123DF028F83A21D975C2074E7D" />
 <title><?php $plxShow->pageTitle(); ?></title>
-<?php $plxShow->meta('description') ?>
-<?php $plxShow->meta('keywords') ?>
-<?php $plxShow->meta('author') ?>
-<?php $plxShow->templateCss() ?>
+<?php $plxShow->meta('description'); ?>
+<?php $plxShow->meta('keywords'); ?>
+<?php $plxShow->meta('author'); ?>
+<?php $plxShow->templateCss(); ?>
 
 <link rel="icon" href="<?php $plxShow->template(); ?>/img/favicon.png" />
 
@@ -54,6 +55,20 @@ body {
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-7594261-41']);
+  _gaq.push(['_setDomainName', 'jonathanmaris.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </head>
 
 <body role="document" aria-labelledby="documentName"><span id="documentName" style="display:none"><?php $plxShow->pageTitle(); ?></span>
@@ -74,7 +89,7 @@ body {
 		  $tagArray = array(0 => '<h2>', 1 => '</h2>');
 	  }
 	  ?>
-      <?php echo $tagArray[0]; ?><a class="brand" href="<?php echo $plxShow->urlRewrite(); ?>"><?php $plxShow->mainTitle(); ?></a><?php echo $tagArray[1]; ?>
+      <?php echo $tagArray[0]; ?><a class="brand" href="<?php echo $plxShow->urlRewrite(); ?>" title="Jonathan Maris: développeur web et développeur php, développeur html5 et css3, freelance Belgique"><?php $plxShow->mainTitle(); ?></a><?php echo $tagArray[1]; ?>
       
       <div class="pull-right">
         
@@ -113,8 +128,8 @@ body {
            
            <aside role="menubar" class="pull-right">
             <ul role="menu" class="btn-group btn-align btn-group-horizontal">
-                <?php $plxShow->staticList($plxShow->getLang('HOME'),'<li role="menuitem" id="#static_id"><a role="link" href="#static_url" class="#static_status btn btn-mini" title="#static_name">#static_name</a></li>'); ?>
-                <?php $plxShow->pageBlog('<li role="menuitem" id="#page_id"><a role="link" class="#page_status btn btn-mini" href="#page_url" title="#page_name">#page_name</a></li>'); ?>
+                <?php $plxShow->staticList($plxShow->getLang('HOME'),'<li role="menuitem" id="#static_id"><a role="link" href="#static_url" class="btn btn-mini #static_status" title="#static_name">#static_name</a></li>'); ?>
+                <?php $plxShow->pageBlog('<li role="menuitem" id="#page_id"><a role="link" class="btn btn-mini #page_status" href="#page_url" title="#page_name">#page_name</a></li>'); ?>
             </ul>
           </aside>
       

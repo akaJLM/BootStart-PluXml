@@ -4,6 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="msvalidate.01" content="783659123DF028F83A21D975C2074E7D" />
 <title><?php $plxShow->pageTitle(); ?></title>
 <?php $plxShow->meta('description') ?>
 <?php $plxShow->meta('keywords') ?>
@@ -54,6 +55,20 @@ body {
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-7594261-41']);
+  _gaq.push(['_setDomainName', 'jonathanmaris.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </head>
 
 <body role="document" aria-labelledby="documentName"><span id="documentName" style="display:none"><?php $plxShow->pageTitle(); ?></span>
@@ -74,7 +89,7 @@ body {
 		  $tagArray = array(0 => '<h2>', 1 => '</h2>');
 	  }
 	  ?>
-      <?php echo $tagArray[0]; ?><a class="brand" href="<?php echo $plxShow->urlRewrite(); ?>"><?php $plxShow->mainTitle(); ?></a><?php echo $tagArray[1]; ?>
+      <?php echo $tagArray[0]; ?><a class="brand" href="<?php echo $plxShow->urlRewrite(); ?>" title="Jonathan Maris: développeur web et développeur php, développeur html5 et css3, freelance Belgique"><?php $plxShow->mainTitle(); ?></a><?php echo $tagArray[1]; ?>
       
       <div class="pull-right">
         

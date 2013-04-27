@@ -330,7 +330,7 @@ class plxShow {
 	 * @scope	global
 	 * @author	Anthony GUÉRIN, Florent MONTHEL, Stephane F
 	 **/
-	public function catList($extra='', $format='<li id="#cat_id" class="#cat_status"><a href="#cat_url" title="#cat_name">#cat_name</a></li>', $include='', $exclude='', $icons='') {
+	public function catList($extra='', $format='<li role="menuitem" id="#cat_id" class="#cat_status"><a role="link" class="#cat_status" href="#cat_url" title="#cat_name"><i class="icon-mini #icon_type #icon_color"></i> #cat_name <span class="label label-info pull-right">#art_nb</span></a></li><hr>', $include='', $exclude='', $icons='') {
 		# Hook Plugins
 		if(eval($this->plxMotor->plxPlugins->callHook('plxShowLastCatList'))) return;
 
@@ -339,7 +339,7 @@ class plxShow {
 			$name = str_replace('#cat_id','cat-home',$format);
 			$name = str_replace('#cat_url',$this->plxMotor->urlRewrite(),$name);
 			$name = str_replace('#cat_name',plxUtils::strCheck($extra),$name);
-			$name = str_replace('#cat_status',($this->catId()=='home'?'active':'noactive'), $name);
+			$name = str_replace('#cat_status',($this->catId()=='home'?'active':'inactive'), $name);
 			$name = str_replace('#art_nb','',$name);
 			echo $name;
 		}
@@ -1140,6 +1140,7 @@ class plxShow {
 
 		# Hook Plugins
 		if(eval($this->plxMotor->plxPlugins->callHook('plxShowStaticListBegin'))) return;
+		
 		$home = ((empty($this->plxMotor->get) OR preg_match('/^page[0-9]*/',$this->plxMotor->get)) AND basename($_SERVER['SCRIPT_NAME'])=="index.php");
 		# Si on a la variable extra, on affiche un lien vers la page d'accueil (avec $extra comme nom)
 		if($extra != '') {
@@ -1147,11 +1148,11 @@ class plxShow {
 			$stat = str_replace('#static_class','static-group',$stat);
 			$stat = str_replace('#static_url',$this->plxMotor->urlRewrite(),$stat);
 			$stat = str_replace('#static_name',plxUtils::strCheck($extra),$stat);
-			$stat = str_replace('#static_status',($home==true?"active":"noactive"), $stat);
+			$stat = str_replace('#static_status',($home==true?"active":"inactive"), $stat);
 			$menus[] = $stat;
 		}
 		else
-				$menus[] = "";
+			$menus[] = "";
 		# On verifie qu'il y a des pages statiques
 		if($this->plxMotor->aStats) {
 			$group_name='';
@@ -1174,7 +1175,7 @@ class plxShow {
 					else
 						$stat = str_replace('#static_url',$this->plxMotor->urlRewrite('?static'.intval($k).'/'.$v['url']),$stat);
 					$stat = str_replace('#static_name',plxUtils::strCheck($v['name']),$stat);
-					$stat = str_replace('#static_status',(($home===false AND $this->staticId()==intval($k))?'static active':'noactive'), $stat);
+					$stat = str_replace('#static_status',(($home===false AND $this->staticId()==intval($k))?'static active':'inactive'), $stat);
 					$menus[] =  $stat;
 					$group_name=$v['group']; # pour gérer la rupture au niveau de l'affichage
 				}

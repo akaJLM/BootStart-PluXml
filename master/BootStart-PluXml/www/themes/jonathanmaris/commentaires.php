@@ -14,7 +14,7 @@
 		$sideInverse = $i % 2 == 0 ? 'right' : 'left';
 		?>
   <span class="badge badge-info badge-hour <?php echo 'pull-'.$sideInverse.''; ?>" style=" <?php echo 'margin-'.$sideInverse.''; ?>: 47.2%; margin-top: 6.1%;">
-  <?php $plxShow->comDate('#hour:#minute'); ?>
+  <time><?php $plxShow->comDate('#hour:#minute'); ?></time>
   </span>
   
   <div class="btn-group btn-group-vertical <?php echo 'pull-'.$side; ?>" style="margin-<?php echo $sideInverse; ?>:5px;"> 
@@ -32,7 +32,7 @@
     </span>
     <?php $plxShow->lang('SAID') ?>
     @
-    <?php $plxShow->comDate('#day #num_day #month #num_year(4)'); ?>
+    <time><?php $plxShow->comDate('#day #num_day #month #num_year(4)'); ?></time>
     </span>
   </blockquote>
   
