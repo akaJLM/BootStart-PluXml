@@ -89,7 +89,7 @@ body {
 		  $tagArray = array(0 => '<h2>', 1 => '</h2>');
 	  }
 	  ?>
-      <?php echo $tagArray[0]; ?><a class="brand" href="<?php echo $plxShow->urlRewrite(); ?>" title="Jonathan Maris: développeur web et développeur php, développeur html5 et css3, freelance Belgique"><?php $plxShow->mainTitle(); ?></a><?php echo $tagArray[1]; ?>
+      <?php echo $tagArray[0]; ?><a class="brand" href="<?php echo $plxShow->urlRewrite(); ?>" title="akaJLM: développeur web et développeur php, développeur html5 et css3, freelance Belgique"><?php $plxShow->mainTitle(); ?></a><?php echo $tagArray[1]; ?>
       
       <div class="pull-right">
         

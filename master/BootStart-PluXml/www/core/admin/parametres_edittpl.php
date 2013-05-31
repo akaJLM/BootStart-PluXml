@@ -3,7 +3,8 @@
  * Edition des fichiers templates du thème en vigueur
  * @package PLX
  * @author	Stephane F
- * modification 30/03/2013 @author Jonathan Maris for © littleRabbitLabs
+ * modification 30/03/2013
+ * @author akaJLM
  **/
 
 include(dirname(__FILE__).'/prepend.php');

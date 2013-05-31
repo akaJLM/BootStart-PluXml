@@ -2,7 +2,7 @@
 
 	<div role="toolbar" aria-label="contact-tool">
     
-		<div role="menu" aria-labelledby="hire-me" id="contact-me" class="btn-group main pull-right"><span id="hire-me" style="display:none">Contacter Jonathan Maris - Web développeur - Belgique</span>
+		<div role="menu" aria-labelledby="hire-me" id="contact-me" class="btn-group main pull-right"><span id="hire-me" style="display:none">Contacter akaJLM - Web développeur - Belgique</span>
             <a class="btn btn-mini" href="https://twitter.com/JonathanMaris1" target="_new" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="M' envoyer un Tweet privé"><i class="icon icon-twitter icon-grey icon-shadowed-white"></i></a>
             <a class="btn btn-mini" href="https://github.com/jonathanmaris" target="_new" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="Me contacter sur Github"><i class="icon icon-github-alt icon-grey icon-shadowed-white"></i></a>
             <a class="btn btn-mini" href="https://plus.google.com/115751515758432574367/posts?hl=fr" target="_new" rel="tooltip" data-toggle="tooltip" data-placement="top" data-original-title="Me contacter depuis mon profil Google Plus"><i class="icon icon-google-plus icon-grey icon-shadowed-white"></i></a>

@@ -5,7 +5,8 @@
  *
  * @package PLX
  * @author	Stephane F et Florent MONTHEL
- * modification 30/03/2013 @author Jonathan Maris for © littleRabbitLabs
+ * modification 30/03/2013 
+ * @author akaJLM
  **/
 
 # Variable pour retrouver la page d'authentification

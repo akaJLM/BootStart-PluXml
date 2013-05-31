@@ -6,7 +6,7 @@
  * @package PLX
  * @author	Stephane F et Florent MONTHEL
  * modification 30/03/2013 
- * @author Jonathan Maris  for © littleRabbitLabs
+ * @author akaJLM
  **/
 
 include(dirname(__FILE__).'/prepend.php');

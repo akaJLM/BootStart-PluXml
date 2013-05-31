@@ -1360,7 +1360,7 @@ class plxShow {
 	 * @param	position 	Détermine la position du label label-info : top, right, bottom, left ou none(pas de label)
 	 * @return	stdout
 	 * @scope	global
-	 * @author	Florent MONTHEL, Stephane F, Jonathan Maris
+	 * @author	Florent MONTHEL, Stephane F, akaJLM
 	 **/
 	public function paginationBootstrap($type = 'normal', $position = 'bottom') {
 
